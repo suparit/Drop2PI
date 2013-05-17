@@ -2,7 +2,7 @@
 import sys, os, time
 from folder import Folder
 from config import PATH_TO_WATCH, AUTO_DOWNLOAD_TIME
-from uploader import upload, delete, move, create_folder
+from uploader import upload, delete, move, create_folder, check_dir_deleted
 import logging
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
@@ -106,6 +106,7 @@ if __name__ == '__main__':
             download = False
     if download:
         sync_download()
+        check_dir_deleted()
     print 'Start end.'
     if watch:
         print 'Start watching...'
@@ -128,6 +129,8 @@ if __name__ == '__main__':
                 if not time_loop % AUTO_DOWNLOAD_TIME:
                     print 'Auto download every %s second' % AUTO_DOWNLOAD_TIME
                     sync_download()
+                    print 'Auto check downloaded file or folder'
+                    check_dir_deleted()
         except KeyboardInterrupt:
             print 'End watching.'
             observer.stop()

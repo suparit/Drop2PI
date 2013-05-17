@@ -57,3 +57,4 @@ def md5_for_file(f, block_size=2**20):
             break
         md5.update(data)
     return md5.digest()
+

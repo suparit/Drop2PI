@@ -26,11 +26,11 @@ def download(file_path, save_to_path):
             return False
     except:
         f.close()
-    print 'Downloading %s and save to %s' % (file_path, save_to_path)
+    print 'downloading %s and save to %s' % (file_path, save_to_path)
     f = open(save_to_path, 'w')
     f.write(d)
     f.close()
-    print 'Downloaded'
+    print 'downloaded'
     return True
 
 if __name__ == '__main__':
