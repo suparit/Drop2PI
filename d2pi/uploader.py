@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 import sys
-
-from utils import get_client, parse_file_dir
+import socket
+from utils import get_client, parse_file_dir, md5_for_file
 
 def upload(file_name, as_file_name):
     print "Uploading %s to %s" % (file_name, as_file_name)
-    r = 'No Result'
+    socket.setdefaulttimeout(10)
     try:
-        f = open(file_name)
         client = get_client()
         if not client:
             return
+        f = open(file_name)
         client.put_file(as_file_name, f, overwrite=True)
+        print 'Uploaded'
     except Exception, e:
         print 'Error %s' % e
         f.close()
 
 def create_folder(path):
+    socket.setdefaulttimeout(10)
     client = get_client()
     try:
         client.file_create_folder(path)
@@ -24,6 +26,7 @@ def create_folder(path):
         print 'Error %s' % e
 
 def delete(path):
+    socket.setdefaulttimeout(10)
     client = get_client()
     try:
         client.file_delete(path)
@@ -31,6 +34,7 @@ def delete(path):
         print 'Error %s' % e
 
 def move(path, to_path):
+    socket.setdefaulttimeout(10)
     client = get_client()
     try:
         client.file_move(path, to_path)

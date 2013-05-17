@@ -6,3 +6,4 @@ ACCESS_TYPE = 'app_folder'
 TOKEN_FILE  = 'dropbox_token.txt'
 
 PATH_TO_WATCH = '/Users/guojing/.dropbox-sync'
+MD5_PATH = PATH_TO_WATCH + '-md5'

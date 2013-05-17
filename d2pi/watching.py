@@ -45,6 +45,7 @@ def sync_upload(event):
             dropbox_path = path.replace(PATH_TO_WATCH, '')
             print 'file %s changed, updating...' % dropbox_path
             upload(path, dropbox_path)
+            sync_download()
     except:
         pass
 
@@ -59,6 +60,7 @@ def sync_upload_create(event):
             create_folder(dropbox_path)
         else:
             upload(path, dropbox_path)
+        sync_download()
     except:
         pass
 
@@ -70,6 +72,7 @@ def sync_upload_delete(event):
         dropbox_path = path.replace(PATH_TO_WATCH, '')
         print 'file %s deleted, updating...' % dropbox_path
         delete(dropbox_path)
+        sync_download()
     except:
         pass
 
@@ -83,6 +86,7 @@ def sync_upload_move(event):
         print 'file moved from %s to %s, updating...' % (dropbox_from_path,
             dropbox_to_path)
         move(dropbox_from_path, dropbox_to_path)
+        sync_download()
     except:
         pass
 
