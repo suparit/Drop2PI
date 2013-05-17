@@ -1,3 +1,19 @@
+# IMPORTANT #
+
+Anything you do, create file, edit file, remove file... after the event, it always re-download all the server files and rewrite the local file.
+
+Example:
+
+If you create the file, it will upload the file, and re-download the file and rewrite it.
+
+SO, IF YOU DID NOT RUNING WATCHING.PY AND EDIT THE FILE, AFTER RUNLING THAT, YOU FILE WILL BE REWRITE.
+
+#### why ####
+
+I don't know if there any way to know the file changed in Dropbox server. And I don't have any push notification system So I have to re-download it everytime to make the server version is the latest. Then we have the KNOWN BUG.
+
+If you have any idea on this, just tell me.
+
 ## Drop2PI ##
 
 First, sorry for bad English.
@@ -5,6 +21,25 @@ First, sorry for bad English.
 This is a very simple tool to sync files between Dropbox and Raspberry PI. In fact this command tools can used any system running on Python.
 
 But I only wants to sync files to Raspberry PI. So I called this Dropbox to PI.
+
+## What's New ##
+
+1. download the file and folder auto.
+2. modify the folder, auto sync to Dropbox.
+3. delete the file or folder which deleted in Dropbox server auto.
+
+## Need to do ##
+
+1. config the max donload file size.
+2. if there is syncing event, quit update event. (see known bug)
+
+## Known bug ##
+
+1. if you delete a file.
+2. it will update to Dropbox server and download the latest files.
+3. when delete another file in processing time.
+4. the file will be re-downlad.
+5. and the second deleted file is not deleted.
 
 ## Packages ##
 
@@ -45,20 +80,6 @@ It will ask you open a link in Browser, and just do what Dropbox ask. Then you c
 	python watching.py
 
 This will watch dir `PATH_TO_WATCH`, and any changes like `create`, `modify`, `delete` and `move` will change the file in Dropbox.
-
-#### IMPORTANT ###
-
-**And anything you do, it always re-download and rewrite the local file. **
-
-If you create the file, it will upload the file, and re-download the file and rewrite it.
-
-SO, IF YOU DID NOT RUNING WATCHING.PY AND EDIT THE FILE, AFTER RUNLING THAT, YOU FILE WILL BE REWRITE.
-
-#### why ####
-
-I don't know if there any way to know the file changed in Dropbox server. And I don't have any push notification system So I have to re-download it everytime to make the server version is the latest.
-
-If you have any idea on this, just tell me.
 
 #### commands ####
 
