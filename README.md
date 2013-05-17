@@ -14,6 +14,10 @@ And also download Dropbox python SDK [HERE](https://www.dropbox.com/developers/c
 
 ## Setup ##
 
+#### config file ####
+
+    cp config.py.tmp config.py
+
 #### edit config ####
 
 open config file and you can see code below:
