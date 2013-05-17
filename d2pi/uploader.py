@@ -16,6 +16,13 @@ def upload(file_name, as_file_name):
         print 'Error %s' % e
         f.close()
 
+def create_folder(path):
+    client = get_client()
+    try:
+        client.file_create_folder(path)
+    except Exception, e:
+        print 'Error %s' % e
+
 def delete(path):
     client = get_client()
     try:

@@ -16,6 +16,7 @@ def download(file_path, save_to_path):
     f = open(save_to_path, 'w')
     f.write(d)
     f.close()
+    return True
 
 if __name__ == '__main__':
     args = sys.argv

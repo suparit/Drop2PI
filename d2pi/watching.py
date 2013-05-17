@@ -2,10 +2,12 @@
 import sys, os, time
 from folder import Folder
 from config import PATH_TO_WATCH
-from uploader import upload, delete, move
+from uploader import upload, delete, move, create_folder
 import logging
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
+
+_watch = True
 
 def sync(folder):
     for f in folder.files:
@@ -27,40 +29,62 @@ def clean():
         os.system('rm -rf %s' % PATH_TO_WATCH)
 
 def sync_download():
-    init()
-    f = Folder.get_by_path('/')
-    sync(f)
+    try:
+        _watch = False
+        init()
+        f = Folder.get_by_path('/')
+        sync(f)
+    except:
+        pass
+    _watch = True
 
 def sync_upload(event):
-    if not event.is_directory:
-        path = event.src_path
-        dropbox_path = path.replace(PATH_TO_WATCH, '')
-        print 'file %s changed, uploading...' % dropbox_path
-        upload(path, dropbox_path)
-        sync_download()
+    try:
+        if not event.is_directory and _watch:
+            path = event.src_path
+            dropbox_path = path.replace(PATH_TO_WATCH, '')
+            print 'file %s changed, updating...' % dropbox_path
+            upload(path, dropbox_path)
+    except:
+        pass
 
 def sync_upload_create(event):
-    path = event.src_path
-    dropbox_path = path.replace(PATH_TO_WATCH, '')
-    print 'file %s created, uploading...' % dropbox_path
-    upload(path, dropbox_path)
-    sync_download()
+    try:
+        if not _watch:
+            return
+        path = event.src_path
+        dropbox_path = path.replace(PATH_TO_WATCH, '')
+        print 'file %s created, updating...' % dropbox_path
+        if event.is_directory:
+            create_folder(dropbox_path)
+        else:
+            upload(path, dropbox_path)
+    except:
+        pass
 
 def sync_upload_delete(event):
-    path = event.src_path
-    dropbox_path = path.replace(PATH_TO_WATCH, '')
-    print 'file %s deleted, uploading...' % dropbox_path
-    delete(dropbox_path)
-    sync_download()
+    try:
+        if not _watch:
+            return
+        path = event.src_path
+        dropbox_path = path.replace(PATH_TO_WATCH, '')
+        print 'file %s deleted, updating...' % dropbox_path
+        delete(dropbox_path)
+    except:
+        pass
 
 def sync_upload_move(event):
-    print dir(event)
-    dropbox_to_path = event.dest_path.replace(PATH_TO_WATCH, '')
-    dropbox_from_path = event.src_path.replace(PATH_TO_WATCH, '')
-    print 'file moved from %s to %s, uploading...' % (dropbox_from_path,
+    try:
+        if not _watch:
+            return
+        print dir(event)
+        dropbox_to_path = event.dest_path.replace(PATH_TO_WATCH, '')
+        dropbox_from_path = event.src_path.replace(PATH_TO_WATCH, '')
+        print 'file moved from %s to %s, updating...' % (dropbox_from_path,
             dropbox_to_path)
-    move(dropbox_from_path, dropbox_to_path)
-    sync_download()
+        move(dropbox_from_path, dropbox_to_path)
+    except:
+        pass
 
 if __name__ == '__main__':
     args = sys.argv
