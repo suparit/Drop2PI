@@ -91,6 +91,7 @@ def sync_upload_move(event):
         pass
 
 if __name__ == '__main__':
+    init()
     args = sys.argv
     args = args[1:]
     watch = True

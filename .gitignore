@@ -18,3 +18,4 @@ nohup.out
 local_config.py
 static/js/components
 dropbox_token.txt
+config.py
