@@ -7,3 +7,5 @@ TOKEN_FILE  = 'dropbox_token.txt'
 
 PATH_TO_WATCH = '/Users/guojing/.dropbox-sync'
 MD5_PATH = PATH_TO_WATCH + '-md5'
+AUTO_DOWNLOAD_TIME = 60 * 10
+MAX_DOWNLOAD_FILE_SIZE = 1024 * 5

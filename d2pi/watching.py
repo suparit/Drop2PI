@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, os, time
 from folder import Folder
-from config import PATH_TO_WATCH
+from config import PATH_TO_WATCH, AUTO_DOWNLOAD_TIME
 from uploader import upload, delete, move, create_folder
 import logging
 from watchdog.observers import Observer
@@ -91,6 +91,7 @@ def sync_upload_move(event):
         pass
 
 if __name__ == '__main__':
+    print 'Starting...'
     init()
     args = sys.argv
     args = args[1:]
@@ -105,6 +106,7 @@ if __name__ == '__main__':
             download = False
     if download:
         sync_download()
+    print 'Start end.'
     if watch:
         print 'Start watching...'
         logging.basicConfig(level=logging.INFO,
@@ -118,9 +120,14 @@ if __name__ == '__main__':
         event_handler.on_deleted = sync_upload_delete
         event_handler.on_created = sync_upload_create
         event_handler.on_moved = sync_upload_move
+        time_loop = 1
         try:
             while True:
                 time.sleep(1)
+                time_loop += 1
+                if not time_loop % AUTO_DOWNLOAD_TIME:
+                    print 'Auto download every %s second' % AUTO_DOWNLOAD_TIME
+                    sync_download()
         except KeyboardInterrupt:
             print 'End watching.'
             observer.stop()
