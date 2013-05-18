@@ -105,11 +105,13 @@ if __name__ == '__main__':
         if '-r' == args[0]:
             download = False
     if download:
+        print 'Start download files...'
         sync_download()
         check_dir_deleted()
+        print 'Sync server end.'
     print 'Start end.'
     if watch:
-        print 'Start watching...'
+        print 'Start watching %s' % PATH_TO_WATCH
         logging.basicConfig(level=logging.INFO,
                             format='%(asctime)s - %(message)s',
                             datefmt='%Y-%m-%d %H:%M:%S')

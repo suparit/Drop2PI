@@ -24,12 +24,12 @@ def set_token(request_token):
 
 def get_token():
     try:
-        token_file = open(TOKEN_FILE)
-        token_key, token_secret = token_file.read().split('|')
-        token_file.close()
-        return token_key, token_secret
+        print 'Reading %s' % TOKEN_FILE
+        with open(TOKEN_FILE) as f:
+            token_key, token_secret = f.read().split('|')
+            f.close()
+            return token_key, token_secret
     except Exception, e:
-        token_file.close()
         print 'Can not read token file %s - Error %s' % (TOKEN_FILE, e)
         return None, None
 
