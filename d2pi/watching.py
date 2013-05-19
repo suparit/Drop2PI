@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, os, time
 from folder import Folder
-from config import PATH_TO_WATCH, AUTO_DOWNLOAD_TIME
+from config import PATH_TO_WATCH, AUTO_SYNC_TIME
 from uploader import upload, delete, move, create_folder, check_dir_deleted
 import logging
 from watchdog.observers import Observer
@@ -41,7 +41,6 @@ def sync_upload(event):
             dropbox_path = path.replace(PATH_TO_WATCH, '')
             print 'file %s changed, updating...' % dropbox_path
             upload(path, dropbox_path)
-            sync_download()
     except:
         pass
 
@@ -54,7 +53,6 @@ def sync_upload_create(event):
             create_folder(dropbox_path)
         else:
             upload(path, dropbox_path)
-        sync_download()
     except:
         pass
 
@@ -64,7 +62,6 @@ def sync_upload_delete(event):
         dropbox_path = path.replace(PATH_TO_WATCH, '')
         print 'file %s deleted, updating...' % dropbox_path
         delete(dropbox_path)
-        sync_download()
     except:
         pass
 
@@ -76,7 +73,6 @@ def sync_upload_move(event):
         print 'file moved from %s to %s, updating...' % (dropbox_from_path,
             dropbox_to_path)
         move(dropbox_from_path, dropbox_to_path)
-        sync_download()
     except:
         pass
 
@@ -118,9 +114,11 @@ if __name__ == '__main__':
             while True:
                 time.sleep(1)
                 time_loop += 1
-                if not time_loop % AUTO_DOWNLOAD_TIME:
-                    print 'Auto download every %s second' % AUTO_DOWNLOAD_TIME
-                    sync_download()
+                if not time_loop % AUTO_SYNC_TIME:
+                    print 'Auto sync every %s second' % AUTO_SYNC_TIME
+                    if not observer.event_queue.unfinished_tasks:
+                        sync_download()
+                        check_dir_deleted()
                     print 'Auto check downloaded file or folder'
                     check_dir_deleted()
         except KeyboardInterrupt:
