@@ -77,6 +77,11 @@ def sync_upload_move(event):
         pass
 
 if __name__ == '__main__':
+    print '******************************************'
+    print '        THANKS FOR USING DROP2PI'
+    print '         GUOJING soundbbg@gmail'
+    print '           thanks to bettylwx'
+    print '******************************************'
     print 'Starting...'
     init()
     args = sys.argv
