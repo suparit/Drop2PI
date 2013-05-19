@@ -7,8 +7,6 @@ import logging
 from watchdog.observers import Observer
 from watchdog.events import LoggingEventHandler
 
-_watch = True
-
 def sync(folder):
     for f in folder.files:
         f.save()
@@ -30,17 +28,15 @@ def clean():
 
 def sync_download():
     try:
-        _watch = False
         init()
         f = Folder.get_by_path('/')
         sync(f)
     except:
         pass
-    _watch = True
 
 def sync_upload(event):
     try:
-        if not event.is_directory and _watch:
+        if not event.is_directory:
             path = event.src_path
             dropbox_path = path.replace(PATH_TO_WATCH, '')
             print 'file %s changed, updating...' % dropbox_path
@@ -51,8 +47,6 @@ def sync_upload(event):
 
 def sync_upload_create(event):
     try:
-        if not _watch:
-            return
         path = event.src_path
         dropbox_path = path.replace(PATH_TO_WATCH, '')
         print 'file %s created, updating...' % dropbox_path
@@ -66,8 +60,6 @@ def sync_upload_create(event):
 
 def sync_upload_delete(event):
     try:
-        if not _watch:
-            return
         path = event.src_path
         dropbox_path = path.replace(PATH_TO_WATCH, '')
         print 'file %s deleted, updating...' % dropbox_path
@@ -78,8 +70,6 @@ def sync_upload_delete(event):
 
 def sync_upload_move(event):
     try:
-        if not _watch:
-            return
         print dir(event)
         dropbox_to_path = event.dest_path.replace(PATH_TO_WATCH, '')
         dropbox_from_path = event.src_path.replace(PATH_TO_WATCH, '')
