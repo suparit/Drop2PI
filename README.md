@@ -17,6 +17,8 @@ Drop2PI是树莓派和Dropbox同步的一个非常简单的小工具，因为Dro
 2. modify the folder, auto sync to Dropbox.
 3. delete the file or folder which deleted in Dropbox server auto.
 
+ZH-CN:
+
 1. 自动下载文件和文件夹
 2. 修改本地文件和文件夹，会同步到Dropbox里
 3. 删除文件或文件夹，会自动删除Dropbox服务器里的文件
@@ -25,6 +27,8 @@ Drop2PI是树莓派和Dropbox同步的一个非常简单的小工具，因为Dro
 
 1. config the max donload file size.
 2. if there is syncing event, quit update event. (see known bug)
+
+ZH-CN:
 
 1. 配置最大的下载文件，文件过大就不下载
 2. 如果正在同步，则取消更新服务
