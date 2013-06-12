@@ -22,6 +22,7 @@ def init():
         os.makedirs(PATH_TO_WATCH)
 
 def clean():
+    return
     if os.path.exists(PATH_TO_WATCH):
         print 'rm -rf %s' % PATH_TO_WATCH
         os.system('rm -rf %s' % PATH_TO_WATCH)
@@ -76,32 +77,8 @@ def sync_upload_move(event):
     except:
         pass
 
-if __name__ == '__main__':
-    print '******************************************'
-    print '        THANKS FOR USING DROP2PI'
-    print '         GUOJING soundbbg@gmail'
-    print '           thanks to bettylwx'
-    print '******************************************'
-    print 'Starting...'
-    init()
-    args = sys.argv
-    args = args[1:]
-    watch = True
-    download = True
-    if args:
-        if '-c' == args[0]:
-            clean()
-        if '-e' == args[0]:
-            watch = False
-        if '-r' == args[0]:
-            download = False
-    if download:
-        print 'Start download files...'
-        sync_download()
-        check_dir_deleted()
-        print 'Sync server end.'
-    print 'Start end.'
-    if watch:
+def watch():
+    try:
         print 'Start watching %s' % PATH_TO_WATCH
         logging.basicConfig(level=logging.INFO,
                             format='%(asctime)s - %(message)s',
@@ -130,3 +107,38 @@ if __name__ == '__main__':
             print 'End watching.'
             observer.stop()
         observer.join()
+    except Exception, e:
+        print '*' * 10
+        print e
+        print '*' * 10
+        return
+
+if __name__ == '__main__':
+    print '******************************************'
+    print '        THANKS FOR USING DROP2PI'
+    print '         GUOJING soundbbg@gmail'
+    print '           thanks to bettylwx'
+    print '******************************************'
+    print 'Starting...'
+    init()
+    args = sys.argv
+    args = args[1:]
+    watch = True
+    download = True
+    if args:
+        if '-c' == args[0]:
+            clean()
+        if '-e' == args[0]:
+            watch = False
+        if '-r' == args[0]:
+            download = False
+    if download:
+        print 'Start download files...'
+        sync_download()
+        check_dir_deleted()
+        print 'Sync server end.'
+    print 'Start end.'
+    if watch:
+        while True:
+            watch()
+

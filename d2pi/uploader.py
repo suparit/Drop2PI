@@ -68,6 +68,8 @@ def check_dir_deleted(path=''):
 
 def _check_delete(path):
     client = get_client()
+    if path == PATH_TO_WATCH:
+        return
     path = path.replace(PATH_TO_WATCH, '')
     try:
         m = client.metadata(path)
