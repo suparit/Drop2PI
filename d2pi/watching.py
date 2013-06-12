@@ -77,7 +77,7 @@ def sync_upload_move(event):
     except:
         pass
 
-def watch():
+def go_watch():
     try:
         print 'Start watching %s' % PATH_TO_WATCH
         logging.basicConfig(level=logging.INFO,
@@ -140,5 +140,5 @@ if __name__ == '__main__':
     print 'Start end.'
     if watch:
         while True:
-            watch()
+            go_watch()
 
